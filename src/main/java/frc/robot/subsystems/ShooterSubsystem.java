@@ -22,7 +22,7 @@ public class ShooterSubsystem extends SubsystemBase {
   WPI_TalonFX rightLeadMotor = new WPI_TalonFX(6);
 
   CANSparkMax leftFollowNeo550Motor = new CANSparkMax(9, MotorType.kBrushless);
-  CANSparkMax rightLeadNeo550Motor = new CANSparkMax(10, MotorType.kBrushless);
+  CANSparkMax rightLeadNeo550Motor = new CANSparkMax(11, MotorType.kBrushless);
 
 
   public ShooterSubsystem() {
@@ -48,18 +48,15 @@ public class ShooterSubsystem extends SubsystemBase {
     rightLeadMotor.setInverted(TalonFXInvertType.Clockwise);
 
     // Neo550 Initialization
-    leftFollowNeo550Motor.restoreFactoryDefaults();
-    rightLeadNeo550Motor.restoreFactoryDefaults();
-
     leftFollowNeo550Motor.set(0);
     rightLeadNeo550Motor.set(0);
 
     leftFollowNeo550Motor.setIdleMode(IdleMode.kCoast);
     rightLeadNeo550Motor.setIdleMode(IdleMode.kCoast);
 
-    leftFollowNeo550Motor.follow(rightLeadNeo550Motor);
+    leftFollowNeo550Motor.follow(rightLeadNeo550Motor, true);
 
-    leftFollowNeo550Motor.setInverted(true);
+    // leftFollowNeo550Motor.setInverted(true);
 
   }
 
