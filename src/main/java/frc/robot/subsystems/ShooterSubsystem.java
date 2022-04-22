@@ -8,44 +8,37 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
 
-  WPI_TalonFX leftFollowMotor = new WPI_TalonFX(5);
-  WPI_TalonFX rightLeadMotor = new WPI_TalonFX(6);
+  CANSparkMax leftFollowMotor = new CANSparkMax(9, MotorType.kBrushless);
+  CANSparkMax rightLeadMotor = new CANSparkMax(11, MotorType.kBrushless);
 
-  CANSparkMax leftFollowNeo550Motor = new CANSparkMax(9, MotorType.kBrushless);
-  CANSparkMax rightLeadNeo550Motor = new CANSparkMax(11, MotorType.kBrushless);
+  CANSparkMax leftFollowNeo550Motor = new CANSparkMax(5, MotorType.kBrushless);
+  CANSparkMax rightLeadNeo550Motor = new CANSparkMax(4, MotorType.kBrushless);
 
 
   public ShooterSubsystem() {
-    // Default factory settings //
-    leftFollowMotor.configFactoryDefault();
-    rightLeadMotor.configFactoryDefault();
 
     // Disable all motors //
-    leftFollowMotor.set(ControlMode.PercentOutput, 0);
-    rightLeadMotor.set(ControlMode.PercentOutput, 0);
+    leftFollowMotor.set(0.0);
+    rightLeadMotor.set(0.0);
 
     // Set neutral mode //(
-    leftFollowMotor.setNeutralMode(NeutralMode.Coast);
-    rightLeadMotor.setNeutralMode(NeutralMode.Coast);
+    leftFollowMotor.setIdleMode(IdleMode.kCoast);
+    rightLeadMotor.setIdleMode(IdleMode.kCoast);
 
     // set followeers //
-    leftFollowMotor.follow(rightLeadMotor);
-
-    // set followers to opposite //
-    leftFollowMotor.setInverted(InvertType.FollowMaster);
-
-    //sett right motor //
-    rightLeadMotor.setInverted(TalonFXInvertType.Clockwise);
+    leftFollowMotor.follow(rightLeadMotor, true);
 
     // Neo550 Initialization
     leftFollowNeo550Motor.set(0);
@@ -56,11 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     leftFollowNeo550Motor.follow(rightLeadNeo550Motor, true);
 
-    // leftFollowNeo550Motor.setInverted(true);
-
   }
-
-  
 
   @Override
   public void periodic() {
@@ -69,8 +58,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shoot(double speed) {
     rightLeadMotor.set(speed);
-
     rightLeadNeo550Motor.set(speed);
+
+    // Display Speed
+    SmartDashboard.putNumber("Joystick X value",speed);
   }
 
   public void motorOff() {

@@ -14,7 +14,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ShootCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_shooter;
-  private final Supplier<Double> m_speed;
+  // private final Supplier<Double> m_variableSpeed;
+
+  private final Supplier<Boolean> m_add1Speed;
+  private final Supplier<Boolean> m_add5Speed;
+  private final Supplier<Boolean> m_add10Speed;
+  private final Supplier<Boolean> m_sub1Speed;
+  private final Supplier<Boolean> m_sub5Speed;
+  private final Supplier<Boolean> m_sub10Speed;
+
+
+  private double m_speed;
 
   /**
    * Creates a new ExampleCommand.
@@ -23,10 +33,23 @@ public class ShootCommand extends CommandBase {
    */
   public ShootCommand(
     ShooterSubsystem shooter,
-    Supplier<Double> speed
+    Supplier<Boolean> add1Speed,
+    Supplier<Boolean> add5Speed,
+    Supplier<Boolean> add10Speed,
+    Supplier<Boolean> sub1Speed,
+    Supplier<Boolean> sub5Speed,
+    Supplier<Boolean> sub10Speed
   ) {
     m_shooter = shooter;
-    m_speed = speed;
+
+    m_add1Speed = add1Speed;
+    m_add5Speed = add5Speed;
+    m_add10Speed = add10Speed;
+    m_sub1Speed = sub1Speed;
+    m_sub5Speed = sub5Speed;
+    m_sub10Speed = sub10Speed;
+
+    m_speed = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }
@@ -38,7 +61,20 @@ public class ShootCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.shoot(m_speed.get());
+    // m_shooter.shoot(m_speed.get());
+
+    if(m_add1Speed.get()) m_speed+=0.01;
+    if(m_add5Speed.get()) m_speed+=0.05;
+    if(m_add10Speed.get()) m_speed+=0.1;
+    if(m_sub1Speed.get()) m_speed-=0.01;
+    if(m_sub5Speed.get()) m_speed-=0.05;
+    if(m_sub10Speed.get()) m_speed-=0.1;
+
+    if(m_speed > 1.0) m_speed = 1.0;
+    if(m_speed < 0.0) m_speed = 0;
+
+    m_shooter.shoot(m_speed);
+
   }
 
   // Called once the command ends or is interrupted.
