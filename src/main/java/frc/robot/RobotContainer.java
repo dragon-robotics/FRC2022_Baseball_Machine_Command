@@ -38,12 +38,12 @@ public class RobotContainer {
       new ShootCommand(
         m_shooterSubsystem,
         // () -> -m_driverController.getRawAxis(Constants.STICK_LEFT_Y), // speed
-        () -> m_driverController.getRawButton(Constants.BTN_A), // +1 speed
-        () -> m_driverController.getRawButton(Constants.BTN_B), // +5 speed
-        () -> m_driverController.getRawButton(Constants.BUMPER_RIGHT), // +10 speed
-        () -> m_driverController.getRawButton(Constants.BTN_X), // -1 speed
-        () -> m_driverController.getRawButton(Constants.BTN_Y), // -5 speed
-        () -> m_driverController.getRawButton(Constants.BUMPER_LEFT)  // -10 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BTN_A), // +1 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BTN_B), // +5 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BUMPER_RIGHT), // +10 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BTN_X), // -1 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BTN_Y), // -5 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BUMPER_LEFT)  // -10 speed
       )
     );
   }
