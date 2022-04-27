@@ -23,9 +23,6 @@ public class ShootCommand extends CommandBase {
   private final Supplier<Boolean> m_sub5Speed;
   private final Supplier<Boolean> m_sub10Speed;
 
-
-  private double m_speed;
-
   /**
    * Creates a new ExampleCommand.
    *
@@ -49,7 +46,6 @@ public class ShootCommand extends CommandBase {
     m_sub5Speed = sub5Speed;
     m_sub10Speed = sub10Speed;
 
-    m_speed = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }
@@ -63,17 +59,12 @@ public class ShootCommand extends CommandBase {
   public void execute() {
     // m_shooter.shoot(m_speed.get());
 
-    if(m_add1Speed.get()) m_speed+=0.01;
-    if(m_add5Speed.get()) m_speed+=0.05;
-    if(m_add10Speed.get()) m_speed+=0.1;
-    if(m_sub1Speed.get()) m_speed-=0.01;
-    if(m_sub5Speed.get()) m_speed-=0.05;
-    if(m_sub10Speed.get()) m_speed-=0.1;
-
-    if(m_speed > 1.0) m_speed = 1.0;
-    if(m_speed < 0.0) m_speed = 0;
-
-    m_shooter.shoot(m_speed);
+    if(m_add1Speed.get()) m_shooter.shoot(0.01);
+    if(m_add5Speed.get()) m_shooter.shoot(0.05);
+    if(m_add10Speed.get()) m_shooter.shoot(0.1);
+    if(m_sub1Speed.get()) m_shooter.shoot(-0.01);
+    if(m_sub5Speed.get()) m_shooter.shoot(-0.05);
+    if(m_sub10Speed.get()) m_shooter.shoot(-0.1);    
 
   }
 

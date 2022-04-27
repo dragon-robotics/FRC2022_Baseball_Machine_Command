@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  public final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
   private final Joystick m_driverController = new Joystick(Constants.DRIVER);
 

@@ -26,6 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
   CANSparkMax leftFollowNeo550Motor = new CANSparkMax(5, MotorType.kBrushless);
   CANSparkMax rightLeadNeo550Motor = new CANSparkMax(4, MotorType.kBrushless);
 
+  private double m_speed;
 
   public ShooterSubsystem() {
 
@@ -54,17 +55,26 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  
+    // Display Speed
+    SmartDashboard.putNumber("Shooter Speed", m_speed);
   }
 
   public void shoot(double speed) {
-    rightLeadMotor.set(speed);
-    rightLeadNeo550Motor.set(speed);
 
-    // Display Speed
-    SmartDashboard.putNumber("Joystick X value",speed);
+    m_speed += speed;
+
+    if(m_speed > 1.0) m_speed = 1.0;
+    if(m_speed < -1.0) m_speed = -1.0;
+
+    rightLeadMotor.set(m_speed);
+    rightLeadNeo550Motor.set(m_speed);
   }
 
   public void motorOff() {
+    rightLeadMotor.set(0);
+    rightLeadNeo550Motor.set(0);
 
+    m_speed = 0;
   }
 }
