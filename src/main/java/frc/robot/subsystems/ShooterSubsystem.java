@@ -4,16 +4,15 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -25,6 +24,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   CANSparkMax leftFollowNeo550Motor = new CANSparkMax(5, MotorType.kBrushless);
   CANSparkMax rightLeadNeo550Motor = new CANSparkMax(4, MotorType.kBrushless);
+
+  Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+  DoubleSolenoid m_doublePCM1 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
   private double m_speed;
 
@@ -76,5 +78,17 @@ public class ShooterSubsystem extends SubsystemBase {
     rightLeadNeo550Motor.set(0);
 
     m_speed = 0;
+  }
+
+  public void pneumaticsExtend() {
+    m_doublePCM1.set(kForward);
+  }
+
+  public void pneumaticsRetract() {
+    m_doublePCM1.set(kReverse);
+  }
+
+  public void pneumaticsNeutral(){
+    m_doublePCM1.set(kOff);
   }
 }

@@ -43,7 +43,9 @@ public class RobotContainer {
         () -> m_driverController.getRawButtonReleased(Constants.BUMPER_RIGHT), // +10 speed
         () -> m_driverController.getRawButtonReleased(Constants.BTN_X), // -1 speed
         () -> m_driverController.getRawButtonReleased(Constants.BTN_Y), // -5 speed
-        () -> m_driverController.getRawButtonReleased(Constants.BUMPER_LEFT)  // -10 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BUMPER_LEFT),  // -10 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BTN_STICK_LEFT),  // -10 speed
+        () -> m_driverController.getRawButtonReleased(Constants.BTN_STICK_RIGHT)  // -10 speed
       )
     );
   }

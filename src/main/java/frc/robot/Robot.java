@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     m_robotContainer.m_shooterSubsystem.motorOff();
+    m_robotContainer.m_shooterSubsystem.pneumaticsNeutral();
   }
 
   @Override

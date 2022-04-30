@@ -22,6 +22,8 @@ public class ShootCommand extends CommandBase {
   private final Supplier<Boolean> m_sub1Speed;
   private final Supplier<Boolean> m_sub5Speed;
   private final Supplier<Boolean> m_sub10Speed;
+  private final Supplier<Boolean> m_pistonExtend;
+  private final Supplier<Boolean> m_pistonRetract;
 
   /**
    * Creates a new ExampleCommand.
@@ -35,7 +37,9 @@ public class ShootCommand extends CommandBase {
     Supplier<Boolean> add10Speed,
     Supplier<Boolean> sub1Speed,
     Supplier<Boolean> sub5Speed,
-    Supplier<Boolean> sub10Speed
+    Supplier<Boolean> sub10Speed,
+    Supplier<Boolean> pistonExtend,
+    Supplier<Boolean> pistonRetract
   ) {
     m_shooter = shooter;
 
@@ -45,6 +49,9 @@ public class ShootCommand extends CommandBase {
     m_sub1Speed = sub1Speed;
     m_sub5Speed = sub5Speed;
     m_sub10Speed = sub10Speed;
+    
+    m_pistonExtend = pistonExtend;
+    m_pistonRetract = pistonRetract;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
@@ -64,8 +71,10 @@ public class ShootCommand extends CommandBase {
     if(m_add10Speed.get()) m_shooter.shoot(0.1);
     if(m_sub1Speed.get()) m_shooter.shoot(-0.01);
     if(m_sub5Speed.get()) m_shooter.shoot(-0.05);
-    if(m_sub10Speed.get()) m_shooter.shoot(-0.1);    
+    if(m_sub10Speed.get()) m_shooter.shoot(-0.1);
 
+    if (m_pistonExtend.get()) m_shooter.pneumaticsExtend();
+    if (m_pistonRetract.get()) m_shooter.pneumaticsRetract();
   }
 
   // Called once the command ends or is interrupted.
